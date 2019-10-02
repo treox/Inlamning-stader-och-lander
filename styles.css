@@ -1,0 +1,10 @@
+
+nav {
+    text-align: center;
+}
+
+li {
+    background-color: lightgreen;
+    display: inline-block;
+    width: 100px;
+}
