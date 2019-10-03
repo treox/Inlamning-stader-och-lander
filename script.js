@@ -1,4 +1,5 @@
 
+let bodye = document.getElementById('body-1');
 let ulLander = document.getElementById('ul-Lander');
 let navb = document.getElementById('nav1');
 
@@ -7,8 +8,6 @@ fetch('land.json')
         return response.json();
     })
     .then(function(lander) {
-
-        console.log(lander);
 
         let arrayLander = [];
         for (a=0; a<lander.length; a++) {
@@ -41,7 +40,6 @@ fetch('land.json')
             });
 
             li11.addEventListener('click', function() {
-                alert('1!');
 
                 ul111 = document.createElement('ul');
                 navb.appendChild(ul111);
@@ -54,16 +52,11 @@ fetch('land.json')
                         liStader1 += '<li class="li-stad" onclick=\"display(' + j + ')\">' + stader[j].stadname + ' (Click) </li>';
     
                         ul111.innerHTML += liStader1;
-
-                        console.log(ul111);
-                        console.log(j);
-
                     } // Slut på if
                 } // Slut på loop
             }); // Slut på eventlistener
 
             li22.addEventListener('click', function() {
-                alert('2!');
 
                 ul222 = document.createElement('ul');
                 navb.appendChild(ul222);
@@ -81,7 +74,6 @@ fetch('land.json')
             }); // Slut på eventlistener
 
             li33.addEventListener('click', function() {
-                alert('3!');
 
                 ul333 = document.createElement('ul');
                 navb.appendChild(ul333);
@@ -126,9 +118,6 @@ fetch('land.json')
                 })
                 .then(function(stader) {
 
-                    console.log(arrayLandid[0]);
-                    console.log(stader[x].countryid);
-
                     // Sorterar JSON data efter befolkningsmängd:
                     stader.sort(function (a, b) {
                     return b.population - a.population;
@@ -137,54 +126,165 @@ fetch('land.json')
                     if (stader[x].countryid === arrayLandid[0]) {
                     document.getElementById('fakta').innerHTML = '' + stader[x].stadname + ' är en stad i ';
                     document.getElementById('inv').innerHTML = stader[x].population;
-                    //console.log(x);
-                    }
+                    
+                    } // Slut på if
 
                     if (stader[x].countryid === arrayLandid[0]) {
                         fetch('land.json')
                         .then(response => response.json())
                         .then(function(land1) {
-                            console.log(land1[0].countryname)
                             document.getElementById('fakta').innerHTML += ''+ land1[0].countryname + '.';
-                            //console.log(x);
+                            
                         })
-                        }
+                    } // Slut på if
 
                     if (stader[x].countryid === arrayLandid[1]) {
                         document.getElementById('fakta').innerHTML = '' + stader[x].stadname + ' är en stad i ';
                         document.getElementById('inv').innerHTML = stader[x].population;
-                        //console.log(x);
-                        }
+                        
+                    } // Slut på if
 
                     if (stader[x].countryid === arrayLandid[1]) {
                         fetch('land.json')
                         .then(response => response.json())
                         .then(function(land2) {
-                            console.log(land2[1].countryname)
                             document.getElementById('fakta').innerHTML += ''+ land2[1].countryname + '.';
-                            //console.log(x);
+                            
                         })
-                        }
+                    } // Slut på if
 
                     if (stader[x].countryid === arrayLandid[2]) {
                         document.getElementById('fakta').innerHTML = '' + stader[x].stadname + ' är en stad i ';
                         document.getElementById('inv').innerHTML = stader[x].population;
-                        //console.log(x);
-                        }
+                        
+                    } // Slut på if
 
                     if (stader[x].countryid === arrayLandid[2]) {
                         fetch('land.json')
                         .then(response => response.json())
                         .then(function(land3) {
-                            console.log(land3[2].countryname)
                             document.getElementById('fakta').innerHTML += ''+ land3[2].countryname + '.';
-                            //console.log(x);
+                        
                         })
-                        }
+                    } // Slut på if
                 })       
             })
             .catch(function(err) {
                 console.log(JSON.stringify(err));
             });
     }
+
+let besokt = document.getElementById('btn-besokt');
+let inv = document.getElementById('inv');
+let paragr = document.getElementById('para');
+
+let arrayBesokt = [];
+
+besokt.addEventListener('click', function() {
+
+    fetch('stad.json')
+    .then(response => response.json())
+    .then(function(staderbkn) {
+
+        let inve = inv.innerHTML;
     
+        for (s=0; s<staderbkn.length; s++) {
+
+            let invj = JSON.stringify(staderbkn[s].population)
+
+            if (invj === inve) {
+
+                let key = 'id';
+                let value = JSON.stringify(staderbkn[s].id);
+
+                if (key && value) {
+                    localStorage.setItem(key, value);
+                } // SLut på if
+
+                for (t=0; t<localStorage.length; t++) {
+                    const key = localStorage.key(t);
+                    const value = localStorage.getItem(key);
+
+                    arrayBesokt.push(value);
+                } // Slut på loop
+            
+                alert('Hurra');
+                
+            } // Slut på if
+        }
+        return arrayBesokt;
+    })
+    .catch(err => console.log(JSON.stringify(err)));
+    
+}) // Slut på eventlistener
+
+let liBes = document.getElementById('li-Bes');
+let sect1 = document.getElementById('sect');
+
+if (arrayBesokt && localStorage) {
+
+    liBes.addEventListener('click', function() {
+
+        let dive = document.createElement('div');
+        let header = document.createElement('h2');
+        let header2 = document.createElement('h2');
+        let paragr = document.createElement('p');
+        let paragr2 = document.createElement('p');
+
+        let btnmod = document.createElement('button');
+        btnmod.innerHTML = '<--Tillbaka';
+        header.innerHTML = 'Städer jag besökt: ';
+        header2.innerHTML = 'Totalt antal människor jag kan ha träffat under mina besök: ';
+
+        dive.appendChild(header);
+        dive.appendChild(paragr);
+        dive.appendChild(header2);
+        dive.appendChild(paragr2);
+        bodye.appendChild(dive);
+        bodye.appendChild(btnmod);
+
+        bodye.removeChild(navb);
+        bodye.removeChild(sect1);
+
+        fetch('stad.json')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(stadermod) {
+
+                // Sorterar JSON data efter befolkningsmängd:
+                stadermod.sort(function (a, b) {
+                return b.population - a.population;
+                });
+
+                for (u=0; u<stadermod.length; u++) {
+                    for (p=0; p<arrayBesokt.length; p++) {
+                    
+                        if (arrayBesokt[p] === JSON.stringify(stadermod[u].id)) {
+                        paragr.innerHTML += 'Besökt stad: ' + stadermod[u].stadname + ' <br />';
+                        } // Slut på if
+                    } // Slut på loop
+                } // SLut på loop
+                
+                let sum = [];
+                for (v=0; v<stadermod.length; v++) {
+                    for (q=0; q<arrayBesokt.length; q++) {
+                    
+                        if (arrayBesokt[q] === JSON.stringify(stadermod[v].id)) {
+                            sum.push(stadermod[v].population);
+                        } // Slut på if
+                    } // Slut på loop
+                } // SLut på loop
+
+                    var sum2 = 0;
+                    var numbers = sum;
+                    numbers.forEach(myFunction);
+
+                    function myFunction(item) {
+                    sum2 += item;
+                    paragr2.innerHTML = sum2;
+                    }
+
+            })
+    }) // Slut på eventlistener
+} // Slut på if
