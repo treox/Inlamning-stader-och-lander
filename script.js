@@ -1,6 +1,6 @@
 
 let ulLander = document.getElementById('ul-Lander');
-let sect1 = document.getElementById('sect');
+let navb = document.getElementById('nav1');
 
 fetch('land.json')
     .then(function(response) {
@@ -8,13 +8,22 @@ fetch('land.json')
     })
     .then(function(lander) {
 
+        console.log(lander);
+
+        let arrayLander = [];
+        for (a=0; a<lander.length; a++) {
+            arrayLander.push(lander[a].id);
+        }
+
         liLander = "";
         for (i=0; i<lander.length; i++) {
             liLander += '<li id=\"li-' + lander[i].id + '\"> ' + lander[i].countryname + ' (Click) </li>';
         }
         ulLander.innerHTML = liLander;
+
+        return arrayLander;
     })
-    .then(function(lander) {
+    .then(function(arrayLander) {
 
         li11 = document.getElementById('li-1');
         li22 = document.getElementById('li-2');
@@ -35,16 +44,14 @@ fetch('land.json')
                 alert('1!');
 
                 ul111 = document.createElement('ul');
-                sect1.appendChild(ul111);
+                navb.appendChild(ul111);
 
                 for (j=0; j<stader.length; j++) {
 
-                    console.log(lander);
-
-                    if (stader[j].countryid === 1) {
+                    if (stader[j].countryid === arrayLander[0]) {
     
                         liStader1 = "";
-                        liStader1 += '<li onclick=\"display(' + j + ')\">' + stader[j].stadname + ' (Click) </li>';
+                        liStader1 += '<li class="li-stad" onclick=\"display(' + j + ')\">' + stader[j].stadname + ' (Click) </li>';
     
                         ul111.innerHTML += liStader1;
 
@@ -59,14 +66,14 @@ fetch('land.json')
                 alert('2!');
 
                 ul222 = document.createElement('ul');
-                sect1.appendChild(ul222);
+                navb.appendChild(ul222);
 
                 for (j=0; j<stader.length; j++) {
 
-                    if (stader[j].countryid === 2) {
+                    if (stader[j].countryid === arrayLander[1]) {
     
                         liStader2 = "";
-                        liStader2 += '<li onclick=\"display(' + j + ')\">' + stader[j].stadname + ' (Click) </li>';
+                        liStader2 += '<li class="li-stad" onclick=\"display(' + j + ')\">' + stader[j].stadname + ' (Click) </li>';
     
                         ul222.innerHTML += liStader2;
                     } // Slut på if
@@ -77,14 +84,14 @@ fetch('land.json')
                 alert('3!');
 
                 ul333 = document.createElement('ul');
-                sect1.appendChild(ul333);
+                navb.appendChild(ul333);
 
                 for (j=0; j<stader.length; j++) {
 
-                    if (stader[j].countryid === 3) {
+                    if (stader[j].countryid === arrayLander[2]) {
     
                         liStader3 = "";
-                        liStader3 += '<li onclick=\"display(' + j + ')\">' + stader[j].stadname + ' (Click) </li>';
+                        liStader3 += '<li class="li-stad" onclick=\"display(' + j + ')\">' + stader[j].stadname + ' (Click) </li>';
     
                         ul333.innerHTML += liStader3;
                     } // Slut på if
@@ -98,24 +105,86 @@ fetch('land.json')
 
     function display(x) {
 
-        fetch('stad.json')
+        fetch('land.json') 
             .then(function(response) {
                 return response.json();
             })
-            .then(function(stader) {
+            .then(function(lander2) {
 
-                // Sorterar JSON data efter befolkningsmängd:
-                stader.sort(function (a, b) {
-                return b.population - a.population;
-                });
+                let arrayLandid = [];
+                for (c=0; c<lander2.length; c++) {
+                    arrayLandid.push(lander2[c].id);
+                }
 
-                console.log(stader);
-                document.getElementById('fakta').innerHTML = 'Fakta om ' + stader[x].stadname + '';
-                document.getElementById('inv').innerHTML = stader[x].population;
-                console.log(x);
+                return arrayLandid;
+            })
+            .then(function(arrayLandid) {
+
+                fetch('stad.json')
+                    .then(function(response) {
+                    return response.json();
+                })
+                .then(function(stader) {
+
+                    console.log(arrayLandid[0]);
+                    console.log(stader[x].countryid);
+
+                    // Sorterar JSON data efter befolkningsmängd:
+                    stader.sort(function (a, b) {
+                    return b.population - a.population;
+                    });
+
+                    if (stader[x].countryid === arrayLandid[0]) {
+                    document.getElementById('fakta').innerHTML = '' + stader[x].stadname + ' är en stad i ';
+                    document.getElementById('inv').innerHTML = stader[x].population;
+                    //console.log(x);
+                    }
+
+                    if (stader[x].countryid === arrayLandid[0]) {
+                        fetch('land.json')
+                        .then(response => response.json())
+                        .then(function(land1) {
+                            console.log(land1[0].countryname)
+                            document.getElementById('fakta').innerHTML += ''+ land1[0].countryname + '.';
+                            //console.log(x);
+                        })
+                        }
+
+                    if (stader[x].countryid === arrayLandid[1]) {
+                        document.getElementById('fakta').innerHTML = '' + stader[x].stadname + ' är en stad i ';
+                        document.getElementById('inv').innerHTML = stader[x].population;
+                        //console.log(x);
+                        }
+
+                    if (stader[x].countryid === arrayLandid[1]) {
+                        fetch('land.json')
+                        .then(response => response.json())
+                        .then(function(land2) {
+                            console.log(land2[1].countryname)
+                            document.getElementById('fakta').innerHTML += ''+ land2[1].countryname + '.';
+                            //console.log(x);
+                        })
+                        }
+
+                    if (stader[x].countryid === arrayLandid[2]) {
+                        document.getElementById('fakta').innerHTML = '' + stader[x].stadname + ' är en stad i ';
+                        document.getElementById('inv').innerHTML = stader[x].population;
+                        //console.log(x);
+                        }
+
+                    if (stader[x].countryid === arrayLandid[2]) {
+                        fetch('land.json')
+                        .then(response => response.json())
+                        .then(function(land3) {
+                            console.log(land3[2].countryname)
+                            document.getElementById('fakta').innerHTML += ''+ land3[2].countryname + '.';
+                            //console.log(x);
+                        })
+                        }
+                })       
             })
             .catch(function(err) {
                 console.log(JSON.stringify(err));
-            })
-    };
+            });
+    }
     
