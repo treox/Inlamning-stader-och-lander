@@ -1,6 +1,6 @@
 
 let ulLander = document.getElementById('ul-Lander');
-console.log(ulLander);
+let sect1 = document.getElementById('sect');
 
 fetch('land.json')
     .then(function(response) {
@@ -14,12 +14,10 @@ fetch('land.json')
         }
         ulLander.innerHTML = liLander;
     })
-    .then(function() {
+    .then(function(lander) {
 
         li11 = document.getElementById('li-1');
-
         li22 = document.getElementById('li-2');
-
         li33 = document.getElementById('li-3');
 
         fetch('stad.json')
@@ -28,20 +26,31 @@ fetch('land.json')
         })
         .then(function(stader) {
 
+            // Sorterar JSON data efter befolkningsmängd:
+            stader.sort(function (a, b) {
+                return b.population - a.population;
+            });
+
             li11.addEventListener('click', function() {
                 alert('1!');
 
                 ul111 = document.createElement('ul');
-                li11.appendChild(ul111);
+                sect1.appendChild(ul111);
 
                 for (j=0; j<stader.length; j++) {
+
+                    console.log(lander);
 
                     if (stader[j].countryid === 1) {
     
                         liStader1 = "";
-                        liStader1 += '<li>' + stader[j].stadname + '</li>';
+                        liStader1 += '<li onclick=\"display(' + j + ')\">' + stader[j].stadname + ' (Click) </li>';
     
                         ul111.innerHTML += liStader1;
+
+                        console.log(ul111);
+                        console.log(j);
+
                     } // Slut på if
                 } // Slut på loop
             }); // Slut på eventlistener
@@ -50,14 +59,14 @@ fetch('land.json')
                 alert('2!');
 
                 ul222 = document.createElement('ul');
-                li22.appendChild(ul222);
+                sect1.appendChild(ul222);
 
                 for (j=0; j<stader.length; j++) {
 
                     if (stader[j].countryid === 2) {
     
                         liStader2 = "";
-                        liStader2 += '<li>' + stader[j].stadname + '</li>';
+                        liStader2 += '<li onclick=\"display(' + j + ')\">' + stader[j].stadname + ' (Click) </li>';
     
                         ul222.innerHTML += liStader2;
                     } // Slut på if
@@ -68,14 +77,14 @@ fetch('land.json')
                 alert('3!');
 
                 ul333 = document.createElement('ul');
-                li33.appendChild(ul333);
+                sect1.appendChild(ul333);
 
                 for (j=0; j<stader.length; j++) {
 
                     if (stader[j].countryid === 3) {
     
                         liStader3 = "";
-                        liStader3 += '<li>' + stader[j].stadname + '</li>';
+                        liStader3 += '<li onclick=\"display(' + j + ')\">' + stader[j].stadname + ' (Click) </li>';
     
                         ul333.innerHTML += liStader3;
                     } // Slut på if
@@ -86,4 +95,27 @@ fetch('land.json')
     .catch(function(err) {
         console.log(JSON.stringify(err));
     });
+
+    function display(x) {
+
+        fetch('stad.json')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(stader) {
+
+                // Sorterar JSON data efter befolkningsmängd:
+                stader.sort(function (a, b) {
+                return b.population - a.population;
+                });
+
+                console.log(stader);
+                document.getElementById('fakta').innerHTML = 'Fakta om ' + stader[x].stadname + '';
+                document.getElementById('inv').innerHTML = stader[x].population;
+                console.log(x);
+            })
+            .catch(function(err) {
+                console.log(JSON.stringify(err));
+            })
+    };
     
