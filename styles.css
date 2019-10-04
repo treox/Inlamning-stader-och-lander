@@ -19,6 +19,12 @@ li {
     display: block;
 }
 
+
+div {
+    display: none;
+}
+
+
 .li-stad:hover {
     background-color: lightseagreen;
 }
