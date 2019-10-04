@@ -245,6 +245,18 @@ let sect1 = document.getElementById('sect');
                         } // Slut på if
                     } // Slut på loop
                 } // SLut på loop
+
+                let Cityn = 'Cityname';
+        
+                if (Cities[0] !== undefined ) {
+                    localStorage.setItem(Cityn, JSON.stringify(Cities));
+                
+                }
+
+                let Cities1 = localStorage.key(0);
+                let Cities2 = localStorage.getItem(Cities1);
+                let paragrx = document.getElementById('p-E');
+                paragrx.innerHTML += 'Besökt stad: ' + Cities2 + ' <br />';
                     
                 let sum = [];
                 for (v=0; v<stadermod.length; v++) {
@@ -262,25 +274,20 @@ let sect1 = document.getElementById('sect');
 
                     function myFunction(item) {
                     sum2 += item;
-                    paragr2.innerHTML = sum2;
                     }
-            
-            return Cities
-            })
-            .then(function(Cities) {
-        
-                let Cityn = 'Cityname';
-        
-                if (Cities[0] !== undefined ) {
-                    localStorage.setItem(Cityn, JSON.stringify(Cities));
                 
-                }
-
-                let Cities1 = localStorage.key(0);
-                let Cities2 = localStorage.getItem(Cities1);
-                let paragrx = document.getElementById('p-E');
-                paragrx.innerHTML += 'Besökt stad: ' + Cities2 + ' <br />';
-            return localStorage;
+                    let Sum3 = 'InvTotalt';
+        
+                    if (Cities[0] !== undefined ) {
+                        localStorage.setItem(Sum3, JSON.stringify(sum2));
+                    
+                    }
+    
+                    let Tot1 = localStorage.key(1);
+                    let Tot2 = localStorage.getItem(Tot1);
+                    let paragrx2 = document.getElementById('p-E2');
+                    paragrx2.innerHTML += + Tot2 + ' <br />';
+            
             })
 
             btntb.addEventListener('click', function() {
@@ -298,6 +305,3 @@ let sect1 = document.getElementById('sect');
             })
             
     }) // Slut på eventlistener
-
-
-
