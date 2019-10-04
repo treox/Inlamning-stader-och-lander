@@ -133,7 +133,7 @@ fetch('land.json')
                         fetch('land.json')
                         .then(response => response.json())
                         .then(function(land1) {
-                            document.getElementById('fakta').innerHTML += ''+ land1[0].countryname + '.';
+                        document.getElementById('fakta').innerHTML += ''+ land1[0].countryname + '.';
                             
                         })
                     } // Slut på if
@@ -148,7 +148,7 @@ fetch('land.json')
                         fetch('land.json')
                         .then(response => response.json())
                         .then(function(land2) {
-                            document.getElementById('fakta').innerHTML += ''+ land2[1].countryname + '.';
+                        document.getElementById('fakta').innerHTML += ''+ land2[1].countryname + '.';
                             
                         })
                     } // Slut på if
@@ -163,7 +163,7 @@ fetch('land.json')
                         fetch('land.json')
                         .then(response => response.json())
                         .then(function(land3) {
-                            document.getElementById('fakta').innerHTML += ''+ land3[2].countryname + '.';
+                        document.getElementById('fakta').innerHTML += ''+ land3[2].countryname + '.';
                         
                         })
                     } // Slut på if
@@ -225,26 +225,16 @@ if (arrayBesokt && localStorage) {
 
     liBes.addEventListener('click', function() {
 
-        let dive = document.createElement('div');
-        let header = document.createElement('h2');
-        let header2 = document.createElement('h2');
-        let paragr = document.createElement('p');
-        let paragr2 = document.createElement('p');
+        let dive = document.getElementById('div-E');
+        let paragr = document.getElementById('p-E');
+        let paragr2 = document.getElementById('p-E2');
+        let btntb = document.getElementById('B-tb');
+        let btnmod = document.getElementById('Rd-B');
 
-        let btnmod = document.createElement('button');
-        btnmod.innerHTML = '<--Rensa data';
-        header.innerHTML = 'Städer jag besökt: ';
-        header2.innerHTML = 'Totalt antal människor jag kan ha träffat under mina besök: ';
+        dive.style.display = 'block';
 
-        dive.appendChild(header);
-        dive.appendChild(paragr);
-        dive.appendChild(header2);
-        dive.appendChild(paragr2);
-        bodye.appendChild(dive);
-        bodye.appendChild(btnmod);
-
-        bodye.removeChild(navb);
-        bodye.removeChild(sect1);
+        navb.style.display = 'none';
+        sect1.style.display = 'none';
 
         fetch('stad.json')
             .then(function(response) {
@@ -285,6 +275,15 @@ if (arrayBesokt && localStorage) {
                     paragr2.innerHTML = sum2;
                     }
 
+            })
+
+            btntb.addEventListener('click', function() {
+                navb.style.display = 'block';
+                sect1.style.display = 'block';
+                dive.style.display = 'none';
+
+                paragr.innerHTML = '';
+                paragr2.innerHTML = '';
             })
 
             btnmod.addEventListener('click', function() {
