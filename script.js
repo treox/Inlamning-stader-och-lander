@@ -194,19 +194,9 @@ besokt.addEventListener('click', function() {
 
             if (invj === inve) {
 
-                let key = 'id';
                 let value = JSON.stringify(staderbkn[s].id);
 
-                if (key && value) {
-                    localStorage.setItem(key, value);
-                } // SLut på if
-
-                for (t=0; t<localStorage.length; t++) {
-                    const key = localStorage.key(t);
-                    const value = localStorage.getItem(key);
-
-                    arrayBesokt.push(value);
-                } // Slut på loop
+                arrayBesokt.push(value);
             
                 alert('Hurra');
                 
@@ -220,8 +210,6 @@ besokt.addEventListener('click', function() {
 
 let liBes = document.getElementById('li-Bes');
 let sect1 = document.getElementById('sect');
-
-if (arrayBesokt && localStorage) {
 
     liBes.addEventListener('click', function() {
 
@@ -247,15 +235,17 @@ if (arrayBesokt && localStorage) {
                 return b.population - a.population;
                 });
 
+                let Cities = [];
+
                 for (u=0; u<stadermod.length; u++) {
                     for (p=0; p<arrayBesokt.length; p++) {
                     
                         if (arrayBesokt[p] === JSON.stringify(stadermod[u].id)) {
-                        paragr.innerHTML += 'Besökt stad: ' + stadermod[u].stadname + ' <br />';
+                            Cities.push(stadermod[u].stadname);
                         } // Slut på if
                     } // Slut på loop
                 } // SLut på loop
-                
+                    
                 let sum = [];
                 for (v=0; v<stadermod.length; v++) {
                     for (q=0; q<arrayBesokt.length; q++) {
@@ -274,7 +264,23 @@ if (arrayBesokt && localStorage) {
                     sum2 += item;
                     paragr2.innerHTML = sum2;
                     }
+            
+            return Cities
+            })
+            .then(function(Cities) {
+        
+                let Cityn = 'Cityname';
+        
+                if (Cities[0] !== undefined ) {
+                    localStorage.setItem(Cityn, JSON.stringify(Cities));
+                
+                }
 
+                let Cities1 = localStorage.key(0);
+                let Cities2 = localStorage.getItem(Cities1);
+                let paragrx = document.getElementById('p-E');
+                paragrx.innerHTML += 'Besökt stad: ' + Cities2 + ' <br />';
+            return localStorage;
             })
 
             btntb.addEventListener('click', function() {
@@ -292,4 +298,6 @@ if (arrayBesokt && localStorage) {
             })
             
     }) // Slut på eventlistener
-} // Slut på if
+
+
+
