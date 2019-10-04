@@ -232,7 +232,7 @@ if (arrayBesokt && localStorage) {
         let paragr2 = document.createElement('p');
 
         let btnmod = document.createElement('button');
-        btnmod.innerHTML = '<--Tillbaka';
+        btnmod.innerHTML = '<--Rensa data';
         header.innerHTML = 'Städer jag besökt: ';
         header2.innerHTML = 'Totalt antal människor jag kan ha träffat under mina besök: ';
 
@@ -286,5 +286,11 @@ if (arrayBesokt && localStorage) {
                     }
 
             })
+
+            btnmod.addEventListener('click', function() {
+                localStorage.clear();
+                location.reload();
+            })
+            
     }) // Slut på eventlistener
 } // Slut på if
