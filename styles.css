@@ -1,29 +1,50 @@
 
+html, body {
+    background-color: rgb(47, 170, 154);
+    margin: 0;
+    padding: 0;
+}
+
 nav {
-    background-color: lightblue;
+    background-color: rgb(41, 122, 150);
     text-align: center;
+    margin: 0;
+}
+
+section {
+    margin: 20px;
+}
+
+div {
+    display: none;
+    margin: 20px;
 }
 
 ul {
     text-align: center;
+    margin: 0;
 }
 
 li {
-    background-color: lightgreen;
+    background-color: rgb(100, 133, 100);
     display: inline-block;
-    width: 200px;
+    width: 325px;
+    margin: 20px;
     padding: 5px;
+    border-radius: 5px;
+}
+
+button {
+    border-radius: 5px;
+    background-color: rgb(100, 133, 100);
+    padding: 5px;
+    font-weight: bold;
+    border: none;
 }
 
 .li-stad {
     display: block;
 }
-
-
-div {
-    display: none;
-}
-
 
 .li-stad:hover {
     background-color: lightseagreen;
@@ -31,6 +52,11 @@ div {
 
 #ul-Lander {
     font-weight: bold;
+}
+
+#li-Bes {
+    font-weight: bold;
+    width: 380px;
 }
 
 #para {
